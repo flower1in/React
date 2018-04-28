@@ -1,0 +1,36 @@
+
+function ListItem(props) {
+  //这里不需要指定key:
+  return <li>{props.value}</li>;
+}
+
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    //对啦！key应该在数组的上下文中被指定
+    <ListItem key={number.toString()} value={number} />
+  );
+  return (
+    <ul>
+      {listItems}
+    </ul>
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  <NumberList numbers={numbers} />,
+  document.getElementById('root')
+);
+
+
+
+///Keys可以在DOM中的某些元素被增加或删除的时候帮助React识别哪些元素发生了变化。因此你应当给数组中的每一个元素赋予一个确定的标识。
+//一个元素的key最好是这个元素在列表中拥有的一个独一无二的字符串。通常，我们使用来自数据的id作为元素的key。
+const listItems = numbers.map((number) =>
+    <ListItem key={number.id} value={number} />
+);
+///当元素没有确定的id时，你可以使用他的序列号索引index作为key。
+const listItems = numbers.map((number, index) =>
+    <ListItem key={index} value={number} />
+);
